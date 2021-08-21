@@ -52,8 +52,8 @@ int *readcsv(FILE *file_p){
         }
         
     }
-    
-    cls[0] = i;
+     cls[0] = i;
     fclose(file_p);
-    return cls;   
+    return cls;  
+    
 }
