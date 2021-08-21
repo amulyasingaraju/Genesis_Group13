@@ -1,6 +1,6 @@
 # SDLC_13_GoGreen
 
-##POWER CONSUMPTION COST
+## POWER CONSUMPTION COST
 ![Screenshot (123)](https://user-images.githubusercontent.com/62830313/130316756-fbb8551b-06d9-437f-b9a4-62e20c0f2137.png)
 
 
