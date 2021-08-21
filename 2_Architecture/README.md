@@ -9,3 +9,4 @@
 
 ## LOW LEVEl DIAGRAMS
 ![highlevelbehave](https://github.com/amulyasingaraju/SDLC_13_GoGreen/blob/main/2_Architecture/low%20level.PNG)
+![lowlevelumldiadram](https://github.com/amulyasingaraju/SDLC_13_GoGreen/blob/main/2_Architecture/LLd1.png)
