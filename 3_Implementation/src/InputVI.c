@@ -1,4 +1,3 @@
-#include<stdio.h>
 
 int AdminInput()
 {
@@ -12,8 +11,4 @@ int AdminInput()
     return voltage,current;
 }
 
-int main()
-    {
-AdminInput();
 
-    }
