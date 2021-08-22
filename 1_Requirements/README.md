@@ -15,11 +15,11 @@ One of the most important considerations with this project was to ensure EV char
   -	Charges EV considering the required safety protocols and monitors overcharging of EV as well. 
 
 ## OBJECTIVES
- - Clean Air Commitment
+ - Clean Air Commitment.
  - Lower cost of driving
- - EVs pave the way to other forms of clean transportation
- - Electric vehicles support environmental justice
- - EV charging increases property value
+ - EVs pave the way to other forms of clean transportation.
+ - Electric vehicles support environmental justice.
+ - EV charging increases property value.
 
 # SWOT Analysis
  A brief analysis on Strengths, Weaknesses, Opportunities and Threats.
@@ -27,14 +27,14 @@ One of the most important considerations with this project was to ensure EV char
 
 # 4 W's and 1 H
 ### WHO
-Anyone who wants to charge their EVs(Electrical Vehicles)
+Anyone who wants to charge their EVs(Electrical Vehicles).
 ### WHAT
-Sustainable Hybrid EV Charging System
+Sustainable Hybrid EV Charging System.
 ### WHEN
-Can be used in all seasons, in any weather condition
+Can be used in all seasons, in any weather condition.
 ### WHERE
-Public spaces, Petrol Pumps, National and State Highways
+Public spaces, Petrol Pumps, National and State Highways.
 ### HOW
-Creating a profitable, sustainable energy solution for charging EVs
+Creating a profitable, sustainable energy solution for charging EVs.
 
 
