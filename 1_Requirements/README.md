@@ -20,5 +20,4 @@ One of the most important considerations with this project was to ensure EV char
  - EVs pave the way to other forms of clean transportation
  - Electric vehicles support environmental justice
  - EV charging increases property value
- - 
 
