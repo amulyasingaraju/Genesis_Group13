@@ -6,4 +6,4 @@
 #include <string.h>
 #include <stdbool.h>
 
-int *readcls(FILE *file_p);
+int *readcsv(FILE *file_p);
