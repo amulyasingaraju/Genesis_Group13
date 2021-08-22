@@ -25,4 +25,16 @@ One of the most important considerations with this project was to ensure EV char
  A brief analysis on Strengths, Weaknesses, Opportunities and Threats.
 ![WhatsApp Image 2021-08-20 at 16 41 32](https://user-images.githubusercontent.com/62830313/130358052-a38e4141-d4a7-4979-a24e-8478bf6e098a.jpeg)
 
+# 4 W's and 1 H
+### WHO
+Anyone who wants to charge their EVs(Electrical Vehicles)
+### WHAT
+Sustainable Hybrid EV Charging System
+### WHEN
+Can be used in all seasons, in any weather condition
+### WHERE
+Public spaces, Petrol Pumps, National and State Highways
+### HOW
+Creating a profitable, sustainable energy solution for charging EVs
+
 
