@@ -42,7 +42,7 @@ Creating a profitable, sustainable energy solution for charging EVs.
 |----------------|-------------------------------|-----------------------------|
 |HR_01|Getting Input from PV       |Implemented            |
 |HR_02|Check for power consumption of the EV – if more is required, grid can be used.            |Implemented|
-|HR_03|Pentium IV Processor  |Implemented|
-|HR_04|RAM(512MB)|Implemented|
-|HR_05|Hard Disk(2GB)|Implemented|
-
+|HR_03|Cost calculation for charging EV  |Implemented|
+|HR_04|Profit calculation for plant owner|Implemented|
+|HR_05|Net metering (feedback to grid)|Implemented|
+|HR_06|Take power from both solar and grid|Implemented|
