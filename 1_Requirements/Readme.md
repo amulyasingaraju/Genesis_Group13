@@ -1,11 +1,43 @@
 # REQUIREMENTS
 
 ## INTRODUCTION
-An EV charging station, also called an EV charger or ELECTRIC VEHICLE SUPPLY EQUIPTMENT (EVSE), is a piece of equipment that supplies electric power for charging plug-in electric vehicles (including hybrids, neighbourhood electric vehicles, trucks, buses and others).
+E-mobility is emerging as one of the fastest mode of trans-portation as it serves zero emission without the use of anyfossile fuel. The cleaner and greener mobility will also     
+servein reducing the CO2 emission content in the atmosphereand help to reduce global warming. However, to make thee-mobility grow faster the production and management 
+of electricity is of the main objective. The main demand of the electric vehicle is the charging methods and its infrastructure.
+As a daily routine, most people will like to have their vehicle charged at the beginning of the day. The preferable location of the charging stations are most likely either near 
+to their own residence or at their work places. Apart from it charging stations at the common public places will be popular. Also,the time of the charging of the vehicles is also 
+an important criteria. Most of the people won’t like to stop for 2-3 hours for charging of the vehicles. Thus the methods of the charging stations will need to deploy in a 
+organised manner such that people could charge at minimum possible time period.
+In the intercity conditions, the demand of the charging will remain obviously very high most of the times. Thus to deliver optimum power to all the stations at high rate 
+is a challenging task. In the outskirts of the city, the demand might not remainas high as compared to the intercity, but installation of the public charging interface at such 
+locations must be deployed with utmost planning. The main responsiblity is to create Charging Structure Infrastructure.
+An EV charging station, also called an EV charger or ELECTRIC VEHICLE SUPPLY EQUIPTMENT (EVSE), is a piece of equipment that supplies electric power for charging plug-in electric 
+vehicles (including hybrids, neighbourhood electric vehicles, trucks, buses and others).
 The EV charging station is written in C language with proper testing cases and make file.
 
 ## RESEARCH
-One of the most important considerations with this project was to ensure EV charging station diversity in location, organization and facility type. With a growing number of local and regional carbon-reduction policies, EV charging stations may be able to benefit from the value of carbon emissions offset by their stations.
+The government has set the target of achieving 100% Electric vehicles by 2030. Manufacturing and putting the electric cars on road is the vision to make India pollution free along 
+with saving billions of dollars in fuel cost and creating new job opportunities.And to meet this goal government have to create Charging Structure Infrastructure.
+Automotive Mission Plan (AMP) has been finalised jointly by Government of India and Indian Automotive Industry. The vision of AMP 2026 is, By 2026, the Indian Automotive industry 
+will be among the top three of the world in engineering, manufacture and export of vehicles and components, and will encompass safe, efficient and environment friendly conditions 
+for affordable mobility of people and transportation of goods in India comparable with global standards growing in value to over 12% of India’s GDP and generating an additional 65 
+million jobs.
+![pic](https://github.com/amulyasingaraju/SDLC_13_GoGreen/blob/main/1_Requirements/1-s2.0-S1364032114001920-gr8.jpg)
+Electric car uses alternate fuel electricity instead of petrol or diesel. There is a growing acceptance for hybrid and electric cars in the country and more and more manufacturers 
+are entering this niche segment with an express objective of lowering the fuel import bill and running cost of vehicles. Conversion of vehicles to electric vehicles has a 
+potential to save fossil fuels worth about $100 bn annually, which in turn would save the country precious foreign exchange, prevent the dependence on imported petroleum products 
+and reduce the pollution in cities by 80-90%.
+
+By the year 2030, the Indian Government wants India to be 100%, electric vehicle nation.
+
+India spent Rs 4.7 Lakh Crores in 2016-17 in importing crude oil. Electric Vehicles will help lower the bill.
+
+Every car sold in India from 2030 will be electric, under new government plans.
+
+India aims to become a 100% electric vehicle nation by 2030. The National Electric Mobility Mission Plan (NEMMP) targets seven million electric and hybrid vehicles by 2020.
+
+One of the most important considerations with this project was to ensure EV charging station diversity in location, organization and facility type. With a growing number of local 
+and regional carbon-reduction policies, EV charging stations may be able to benefit from the value of carbon emissions offset by their stations.
 
 ## FEATURES
   -	Helps in charging multiple EVs at a time.
