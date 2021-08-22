@@ -40,5 +40,9 @@ Creating a profitable, sustainable energy solution for charging EVs.
 ## High Level Requirements
 |      ID          |Description                          |Status                         |
 |----------------|-------------------------------|-----------------------------|
-|HR_01|Getting input from PV       |Implemented            |
+|HR_01|Getting Input from PV       |Implemented            |
+|HR_02|Check for power consumption of the EV – if more is required, grid can be used.            |Implemented|
+|HR_03|Pentium IV Processor  |Implemented|
+|HR_04|RAM(512MB)|Implemented|
+|HR_05|Hard Disk(2GB)|Implemented|
 
