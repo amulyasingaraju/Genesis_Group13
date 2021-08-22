@@ -15,6 +15,10 @@ One of the most important considerations with this project was to ensure EV char
   -	Charges EV considering the required safety protocols and monitors overcharging of EV as well. 
 
 ## OBJECTIVES
- - Usage of sustainable energy to reduce pollution.
- - Create a cost efficient and profitable system to charge EV
+ - Clean Air Commitment
+ - Lower cost of driving
+ - EVs pave the way to other forms of clean transportation
+ - Electric vehicles support environmental justice
+ - EV charging increases property value
+ - 
 
