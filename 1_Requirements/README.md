@@ -39,5 +39,6 @@ Creating a profitable, sustainable energy solution for charging EVs.
 
 ## High Level Requirements
 |      ID          |Description                          |Status                         |
-
+|----------------|-------------------------------|-----------------------------|
+|HR_01|Getting input from PV       |Implemented            |
 
