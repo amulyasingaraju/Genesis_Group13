@@ -57,7 +57,7 @@ Creating a profitable, sustainable energy solution for charging EVs.
 |LR_04| Grid - PV Power < Load ; Take power from grid & Net Metering and Islanded - PV Power >= Load ; Directly power the station & send surplus to grid |Implemented|
 |LR_05| Calculation of EV Power Consumption   |Implemented|  
 |LR_06| Calculation of power used in net metering  |Implemented|
-|LR_07|For charging port 3 scooters, 2 cars ( 3x3 + 2x50 = 109)kWh Max power when all ports are being used. Check whether power is within constraints for each vehicle (for vehicle safety)   |Implemented|
-|LR_08| Calculation of EV Power Consumption   |Implemented|
+|LR_07|For charging port 3 scooters, 2 cars ( 3x3 + 2x50 = 109)kWh Max power when all ports are being used. Check whether power is within constraints for each vehicle (for vehicle safety) 	Scooter – 3kWh, Car – 50kWh  |Implemented|
+|LR_08| 	What is maximum amount of power being produced by PV and how many vehicles can be charged in a day? (Assuming PV Max Power = 120kWh)  |Implemented|
 
 
