@@ -17,4 +17,6 @@
 
 ## LOW LEVEl DIAGRAMS
 ![highlevelbehave](https://github.com/amulyasingaraju/SDLC_13_GoGreen/blob/main/2_Architecture/low%20level.PNG)
-![lowlevelumldiadram](https://github.com/amulyasingaraju/SDLC_13_GoGreen/blob/main/2_Architecture/LLd1.png)
+
+![WhatsApp Image 2021-08-22 at 6 58 23 PM](https://user-images.githubusercontent.com/86190226/130359637-72b01599-8ce1-4e25-910d-aa9af6f05c07.jpeg)
+
