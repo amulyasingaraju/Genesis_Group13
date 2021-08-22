@@ -22,6 +22,7 @@ One of the most important considerations with this project was to ensure EV char
  - EV charging increases property value
 
 # SWOT Analysis
+ A brief analysis on Strengths, Weaknesses, Opportunities and Threats.
 ![WhatsApp Image 2021-08-20 at 16 41 32](https://user-images.githubusercontent.com/62830313/130358052-a38e4141-d4a7-4979-a24e-8478bf6e098a.jpeg)
 
 
