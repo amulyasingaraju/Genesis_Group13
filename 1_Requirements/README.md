@@ -14,3 +14,7 @@ One of the most important considerations with this project was to ensure EV char
   -	System is adaptable to all seasons. 
   -	Charges EV considering the required safety protocols and monitors overcharging of EV as well. 
 
+## OBJECTIVES
+ - Usage of sustainable energy to reduce pollution.
+ - Create a cost efficient and profitable system to charge EV
+
