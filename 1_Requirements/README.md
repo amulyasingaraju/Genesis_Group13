@@ -38,5 +38,6 @@ Public spaces, Petrol Pumps, National and State Highways.
 Creating a profitable, sustainable energy solution for charging EVs.
 
 ## High Level Requirements
+|      ID          |Description                          |Status                         |
 
 
