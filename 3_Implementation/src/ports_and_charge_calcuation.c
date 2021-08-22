@@ -23,24 +23,24 @@ int main()
 	printf("Enter port status of scooter:");
 	for (i=0;i<3;i++)
 	{
-    	scanf("%d",&arr[i]);
+    		scanf("%d",&arr[i]);
 	}
 	printf("Enter port status of car:");
 	for (j=0;j<2;j++)
 	{
-    	scanf("%d",&arr1[j]);
+    		scanf("%d",&arr1[j]);
 	}
 	for(i=0;i<3;i++)
 	{
 		if(arr[i]!=0)
 		{
-    		printf("\nThe scooter port %d is being used\n",i);
-    		wait(1);
-    		printf("total charge cost recorded : %d rupees\n",KWh*unit);
-    		time = KWh*3;//time to charge each scooter per unit is 3 minutes
-    		printf("total time : %.2f minutes\n\n",time);
-		sum+=KWh*unit;
-		count+=time;//storing time of each scooter port used
+    			printf("\nThe scooter port %d is being used\n",i);
+    			wait(1);
+    			printf("total charge cost recorded : %d rupees\n",KWh*unit);
+    			time = KWh*3;//time to charge each scooter per unit is 3 minutes
+    			printf("total time : %.2f minutes\n\n",time);
+			sum+=KWh*unit;
+			count+=time;//storing time of each scooter port used
 		}
 		else
 		{
@@ -52,13 +52,13 @@ int main()
 	{
 		if(arr1[j]!=0)
 		{
-    		printf("The car port %d is being used\n",j);
-    		wait(1);
-    		printf("total charge cost recorded : %d rupees\n",KWh1*unit);
-    		time1 = KWh1*6;//time to charge each car per unit is 0.6 minutes
-    		printf("total time : %f minutes\n\n",time1/10);
-		sum1+=KWh1*unit;
-		count1+=(time1/10);// storing time of each car port used
+    			printf("The car port %d is being used\n",j);
+    			wait(1);
+    			printf("total charge cost recorded : %d rupees\n",KWh1*unit);
+    			time1 = KWh1*6;//time to charge each car per unit is 0.6 minutes
+    			printf("total time : %f minutes\n\n",time1/10);
+			sum1+=KWh1*unit;
+			count1+=(time1/10);// storing time of each car port used
 		}
 		else
 		{
