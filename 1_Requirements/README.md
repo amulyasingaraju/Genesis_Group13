@@ -52,3 +52,4 @@ Creating a profitable, sustainable energy solution for charging EVs.
 |      ID          |Description                          |Status                         |
 |----------------|-------------------------------|-----------------------------|
 |LR_01| 	Calculation of PV Power        |Implemented            |
+|LR_02| 	Calculation of load demand            |Implemented|
