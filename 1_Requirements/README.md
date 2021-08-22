@@ -50,14 +50,5 @@ Creating a profitable, sustainable energy solution for charging EVs.
 ## Low Level Requirements
 
 |      ID          |Description                          |Status                         |
-|LR_01| Calculation of PV Power       |Implemented            |
-|LR_02|	Calculation of load demand           |Implemented|
-|LR_03|Checking power condition (check for mode of operation – islanded/grid)
-        	Grid - PV Power < Load ; Take power from grid & Net Metering
-        Islanded - PV Power >= Load ; Directly power the station & send surplus to grid
-   |Implemented|
-|LR_04|Functions to find trigonometric operations |Future|
-|LR_05|Functions to display hex, octal, binary and ASCII of a decimal number |Future|
-|LR_06| Bitwise logical operations |Future|
-|LR_01| Using Addition, Subtraction, Multiplication, Division functions        |Implemented            |
-|LR_02|Using functions to find simple and compound interests and total amount            |Implemented|
+|----------------|-------------------------------|-----------------------------|
+|LR_01| 	Calculation of PV Power        |Implemented            |
