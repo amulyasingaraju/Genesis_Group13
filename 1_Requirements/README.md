@@ -21,3 +21,7 @@ One of the most important considerations with this project was to ensure EV char
  - Electric vehicles support environmental justice
  - EV charging increases property value
 
+# SWOT Analysis
+
+
+
