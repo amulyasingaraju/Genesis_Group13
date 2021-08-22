@@ -39,8 +39,8 @@ int main()
     		printf("total charge cost recorded : %d rupees\n",KWh*unit);
     		time = KWh*3;//time to charge each scooter per unit is 3 minutes
     		printf("total time : %.2f minutes\n\n",time);
-			sum+=KWh*unit;
-			count+=time;//storing time of each port used
+		sum+=KWh*unit;
+		count+=time;//storing time of each scooter port used
 		}
 		else
 		{
@@ -57,8 +57,8 @@ int main()
     		printf("total charge cost recorded : %d rupees\n",KWh1*unit);
     		time1 = KWh1*6;//time to charge each car per unit is 0.6 minutes
     		printf("total time : %f minutes\n\n",time1/10);
-			sum1+=KWh1*unit;
-			count1+=(time1/10);
+		sum1+=KWh1*unit;
+		count1+=(time1/10);// storing time of each car port used
 		}
 		else
 		{
