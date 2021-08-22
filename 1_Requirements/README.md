@@ -54,8 +54,8 @@ Creating a profitable, sustainable energy solution for charging EVs.
 |LR_01| 	Calculation of PV Power        |Implemented            |
 |LR_02| 	Calculation of load demand            |Implemented|
 |LR_03| 	Checking power condition (check for mode of operation – islanded/grid)
-	Grid - PV Power < Load ; Take power from grid & Net Metering
-	Islanded - PV Power >= Load ; Directly power the station & send surplus to grid
+	|Grid - PV Power < Load ; Take power from grid & Net Metering|
+	|Islanded - PV Power >= Load ; Directly power the station & send surplus to grid|
  |Implemented|
        
 
