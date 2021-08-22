@@ -8,9 +8,9 @@ The EV charging station is written in C language with proper testing cases and m
 One of the most important considerations with this project was to ensure EV charging station diversity in location, organization and facility type. With a growing number of local and regional carbon-reduction policies, EV charging stations may be able to benefit from the value of carbon emissions offset by their stations.
 
 ## FEATURES
-  •	Helps in charging multiple EVs at a time.
-  •	EV Charging Station with 5 modular charging ports – 3 Scooters and 2 Cars at a time.
-  •	Each charging port provides power output as needed by the vehicle.
-  •	System is adaptable to all seasons. 
-  •	Charges EV considering the required safety protocols and monitors overcharging of EV as well. 
+  -	Helps in charging multiple EVs at a time.
+  -	EV Charging Station with 5 modular charging ports – 3 Scooters and 2 Cars at a time.
+  -	Each charging port provides power output as needed by the vehicle.
+  -	System is adaptable to all seasons. 
+  -	Charges EV considering the required safety protocols and monitors overcharging of EV as well. 
 
