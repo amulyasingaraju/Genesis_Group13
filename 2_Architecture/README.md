@@ -20,3 +20,7 @@
 
 ![WhatsApp Image 2021-08-22 at 6 58 23 PM](https://user-images.githubusercontent.com/86190226/130359637-72b01599-8ce1-4e25-910d-aa9af6f05c07.jpeg)
 
+
+
+## SURPLUS POWER DIAGRAM
+![lowlevelbehave](https://user-images.githubusercontent.com/86395795/130395365-3ba8db1e-ddbc-47f7-a9ba-3b6978a535ff.png)
