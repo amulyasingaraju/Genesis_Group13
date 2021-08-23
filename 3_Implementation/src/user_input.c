@@ -62,4 +62,27 @@ int port_input()
     printf("Please enter port %d data :\n",i+1);
     scanf("%d",&port[i]);
  }
- 
+  //int scooter_power;//= 3000; // power required to charge one scooter is 3kWh
+ //int car_power;// = 50000; // power required to charge one car is 50kWh
+
+printf("\t\t\t\t\t**** Customer Screen ****\n\n");
+
+ for(int i=0; i<3; i++)
+ {  // to calculate power required to charge scooter 
+     if(port[i]==1)
+     {   
+         printf("Dear Customer currently you are using port %d.\n\n",i+1);
+         int amount_s;
+         printf("Please Enter Amount(in multiple of 5) :");
+         scanf("%d",&amount_s);
+         printf("\n\n");
+         int delivered_power = (amount_s/5) * 1000; // to store energy in Wh  
+         printf("Please select payment mode.\n\n1. UPI\n2. Card\n");
+         scanf("%d",&select);
+         switch(select)
+         {
+            case 1:
+                printf("waiting\n\n");
+                wait(2);
+                printf("Payment Sucessfull.\n\n");
+                break;
