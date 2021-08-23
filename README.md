@@ -1,3 +1,4 @@
 # WELCOME TO EV CHARGING STATION
-![petrol-pump](https://user-images.githubusercontent.com/86190226/130326494-1d8b45f5-9899-446b-8b8d-184d9fafd796.gif)
+![hybrid charging copy](https://user-images.githubusercontent.com/86198474/130393083-db78d56a-a982-466e-be5f-82a5682b34d9.jpg)
+
 
