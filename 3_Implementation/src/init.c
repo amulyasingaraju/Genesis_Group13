@@ -1,6 +1,6 @@
 /**
  * @file init.c
- * @author your name (you@domain.com)
+ * @author Gangadhar Telagareddy (you@domain.com)
  * @brief 
  * @version 0.1
  * @date 2021-08-21
