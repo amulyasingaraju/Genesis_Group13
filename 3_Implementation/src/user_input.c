@@ -62,7 +62,7 @@ int port_input()
     printf("Please enter port %d data :\n",i+1);
     scanf("%d",&port[i]);
  }
- //int scooter_power;//= 3000; // power required to charge one scooter is 3kWh
+  //int scooter_power;//= 3000; // power required to charge one scooter is 3kWh
  //int car_power;// = 50000; // power required to charge one car is 50kWh
 
 printf("\t\t\t\t\t**** Customer Screen ****\n\n");
@@ -85,6 +85,7 @@ printf("\t\t\t\t\t**** Customer Screen ****\n\n");
                 printf("waiting\n\n");
                 wait(2);
                 printf("Payment Sucessfull.\n\n");
+<<<<<<< HEAD
                 break;
             case 2:
                 printf("waiting\n\n");
@@ -150,3 +151,6 @@ printf("\t\t\t\t\t**** Customer Screen ****\n\n");
  power_compare(pv_power,load_demand,PROFITGRID);
  //return load_demand;
 }
+=======
+                break;
+>>>>>>> b32b3c2c691791345dd36c0b05c2f1b3f6270fe1
