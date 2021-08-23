@@ -20,4 +20,5 @@ int islanded_mode(int pv_power, int load_demand,int PROFITGRID)
 
     }
     printf("Today's total profit is Rs %d",EARNINGG+PROFITGRID);
+    return extra_power;
 }
