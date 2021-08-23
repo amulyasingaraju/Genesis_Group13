@@ -7,3 +7,5 @@
 #include <stdbool.h>
 
 int *readcsv(FILE *file_p);
+
+#endif

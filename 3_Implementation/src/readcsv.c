@@ -5,7 +5,7 @@ int *readcsv(FILE *file_p){
     char line[1024];//to store data read from csv file as a string
     int row_count = 0;//count number of rows
     int col_count = 0;//count number of coloumns
-    static int cls[1024];//to store the price from required row
+    static int cls[1024];//to store the data from required row
     int i = 0;
 
     //Again check if the file is empty or wrong file name
@@ -19,7 +19,7 @@ int *readcsv(FILE *file_p){
         row_count++;//append row
 
         char* field = strtok(line,"\"");//seperate each coloumn one by one
-        //loop until coloumn completes
+        //loop until column completes
         while(field != NULL){
         
         //check for element with only a comma ","
