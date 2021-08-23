@@ -1,9 +1,7 @@
 # REQUIREMENTS
 
 ## INTRODUCTION
-E-mobility is emerging as one of the fastest mode of trans-portation as it serves zero emission without the use of anyfossile fuel. The cleaner and greener mobility will also     
-servein reducing the CO2 emission content in the atmosphereand help to reduce global warming. However, to make thee-mobility grow faster the production and management of 
-electricity is of the main objective. The main demand of the electric vehicle is the charging methods and its infrastructure.
+E-mobility is emerging as one of the fastest mode of trans-portation as it serves zero emission without the use of anyfossile fuel. The cleaner and greener mobility will also     servein reducing the CO2 emission content in the atmosphereand help to reduce global warming. However, to make thee-mobility grow faster the production and management of electricity is of the main objective. The main demand of the electric vehicle is the charging methods and its infrastructure.
 
 As a daily routine, most people will like to have their vehicle charged at the beginning of the day. The preferable location of the charging stations are most likely either near 
 to their own residence or at their work places. Apart from it charging stations at the common public places will be popular. Also,the time of the charging of the vehicles is also 
