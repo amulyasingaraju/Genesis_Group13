@@ -23,4 +23,4 @@
 
 
 ## SURPLUS POWER DIAGRAM
-![lowlevelbehave](https://user-images.githubusercontent.com/86395795/130395365-3ba8db1e-ddbc-47f7-a9ba-3b6978a535ff.png)
+![lowlevelbehave](https://github.com/amulyasingaraju/SDLC_13_GoGreen/blob/main/2_Architecture/SurplusPower.png)
