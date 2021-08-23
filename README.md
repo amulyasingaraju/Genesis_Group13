@@ -18,3 +18,8 @@ Build | Code Quality | Unity |            [Git Inspector]              |
 | 5_Report | Generated Report |
 | 6_ImagesandVideos | All the UML diagrams and other required images |
 | 7_Meeting Details | Discussing about the project and contributing the work |
+
+## Contribution List
+| SF ID  | Name          | Features                       | Issues Raised |  Issues Resolved| No of test cases  |
+|---     |---            |---                             |---------------|----------------|------------------- |
+|        |               |                                |               |                |                    |
