@@ -29,7 +29,7 @@ void wait(int wait)
 
 int user_input()
 {   // TO take Pv Parameter as input
-      printf("\t\t\t\t\t**** Owner Screen ****\n\n");
+    printf("\t\t\t\t\t**** Owner Screen ****\n\n");
 
     printf("Dear User, Please provide PV Data.....\n\n");
     printf("Your maximum PV Power Capacity is 120kWh.\n\n");
@@ -85,7 +85,6 @@ printf("\t\t\t\t\t**** Customer Screen ****\n\n");
                 printf("waiting\n\n");
                 wait(2);
                 printf("Payment Sucessfull.\n\n");
-<<<<<<< HEAD
                 break;
             case 2:
                 printf("waiting\n\n");
@@ -117,7 +116,7 @@ printf("\t\t\t\t\t**** Customer Screen ****\n\n");
          printf("\n\n");
          int delivered_power = (amount_c/5) * 1000; // to store energy in Wh  
          printf("Please select payment mode.\n\n1. UPI\n2. Card\n");
-         //printf("1. UPI\n2. Card\n");
+        
          scanf("%d",&select);
          switch(select)
          {
@@ -151,6 +150,4 @@ printf("\t\t\t\t\t**** Customer Screen ****\n\n");
  power_compare(pv_power,load_demand,PROFITGRID);
  //return load_demand;
 }
-=======
-                break;
->>>>>>> b32b3c2c691791345dd36c0b05c2f1b3f6270fe1
+
