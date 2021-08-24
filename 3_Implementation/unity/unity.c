@@ -1648,3 +1648,110 @@ static void UnityPrintFVA(const char* format, va_list va)
                                 break;
                             }
 #ifndef UNITY_EXCLUDE_FLOAT_PRINT
+                        case 'f':
+                        case 'g':
+                            {
+                                const double number = va_arg(va, double);
+                                UnityPrintFloat((UNITY_DOUBLE)number);
+                                break;
+                            }
+#endif
+                        case 'u':
+                            {
+                                const unsigned int number = va_arg(va, unsigned int);
+                                UnityPrintNumberUnsigned((UNITY_UINT)number);
+                                break;
+                            }
+                        case 'b':
+                            {
+                                const unsigned int number = va_arg(va, unsigned int);
+                                const UNITY_UINT mask = (UNITY_UINT)0 - (UNITY_UINT)1;
+                                UNITY_OUTPUT_CHAR('0');
+                                UNITY_OUTPUT_CHAR('b');
+                                UnityPrintMask(mask, (UNITY_UINT)number);
+                                break;
+                            }
+                        case 'x':
+                        case 'X':
+                        case 'p':
+                            {
+                                const unsigned int number = va_arg(va, unsigned int);
+                                UNITY_OUTPUT_CHAR('0');
+                                UNITY_OUTPUT_CHAR('x');
+                                UnityPrintNumberHex((UNITY_UINT)number, 8);
+                                break;
+                            }
+                        case 'c':
+                            {
+                                const int ch = va_arg(va, int);
+                                UnityPrintChar((const char *)&ch);
+                                break;
+                            }
+                        case 's':
+                            {
+                                const char * string = va_arg(va, const char *);
+                                UnityPrint(string);
+                                break;
+                            }
+                        case '%':
+                            {
+                                UnityPrintChar(pch);
+                                break;
+                            }
+                        default:
+                            {
+                                /* print the unknown format character */
+                                UNITY_OUTPUT_CHAR('%');
+                                UnityPrintChar(pch);
+                                break;
+                            }
+                    }
+                }
+            }
+#ifdef UNITY_OUTPUT_COLOR
+            /* print ANSI escape code */
+            else if ((pch == 27) && ((pch + 1) == '['))
+            {
+                pch += UnityPrintAnsiEscapeString(pch);
+                continue;
+            }
+#endif
+            else if (*pch == '\n')
+            {
+                UNITY_PRINT_EOL();
+            }
+            else
+            {
+                UnityPrintChar(pch);
+            }
+
+            pch++;
+        }
+    }
+}
+
+void UnityPrintF(const UNITY_LINE_TYPE line, const char* format, ...)
+{
+    UnityTestResultsBegin(Unity.TestFile, line);
+    UnityPrint("INFO");
+    if(format != NULL)
+    {
+        UnityPrint(": ");
+        va_list va;
+        va_start(va, format);
+        UnityPrintFVA(format, va);
+        va_end(va);
+    }
+    UNITY_PRINT_EOL();
+}
+#endif /* ! UNITY_INCLUDE_PRINT_FORMATTED */
+
+
+/*-----------------------------------------------
+ * Control Functions
+ -----------------------------------------------/
+
+/-----------------------------------------------/
+void UnityFail(const char* msg, const UNITY_LINE_TYPE line)
+{
+    RETURN_IF_FAIL_OR_IGNORE;
