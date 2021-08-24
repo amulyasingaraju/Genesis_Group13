@@ -184,3 +184,198 @@ void UnityPrintLen(const char* string, const UNITY_UINT32 length)
         }
     }
 }
+/-----------------------------------------------/
+void UnityPrintNumberByStyle(const UNITY_INT number, const UNITY_DISPLAY_STYLE_T style)
+{
+    if ((style & UNITY_DISPLAY_RANGE_INT) == UNITY_DISPLAY_RANGE_INT)
+    {
+        if (style == UNITY_DISPLAY_STYLE_CHAR)
+        {
+            /* printable characters plus CR & LF are printed */
+            UNITY_OUTPUT_CHAR('\'');
+            if ((number <= 126) && (number >= 32))
+            {
+                UNITY_OUTPUT_CHAR((int)number);
+            }
+            /* write escaped carriage returns */
+            else if (number == 13)
+            {
+                UNITY_OUTPUT_CHAR('\\');
+                UNITY_OUTPUT_CHAR('r');
+            }
+            /* write escaped line feeds */
+            else if (number == 10)
+            {
+                UNITY_OUTPUT_CHAR('\\');
+                UNITY_OUTPUT_CHAR('n');
+            }
+            /* unprintable characters are shown as codes */
+            else
+            {
+                UNITY_OUTPUT_CHAR('\\');
+                UNITY_OUTPUT_CHAR('x');
+                UnityPrintNumberHex((UNITY_UINT)number, 2);
+            }
+            UNITY_OUTPUT_CHAR('\'');
+        }
+        else
+        {
+            UnityPrintNumber(number);
+        }
+    }
+    else if ((style & UNITY_DISPLAY_RANGE_UINT) == UNITY_DISPLAY_RANGE_UINT)
+    {
+        UnityPrintNumberUnsigned((UNITY_UINT)number);
+    }
+    else
+    {
+        UNITY_OUTPUT_CHAR('0');
+        UNITY_OUTPUT_CHAR('x');
+        UnityPrintNumberHex((UNITY_UINT)number, (char)((style & 0xF) * 2));
+    }
+}
+
+/-----------------------------------------------/
+void UnityPrintNumber(const UNITY_INT number_to_print)
+{
+    UNITY_UINT number = (UNITY_UINT)number_to_print;
+
+    if (number_to_print < 0)
+    {
+        /* A negative number, including MIN negative */
+        UNITY_OUTPUT_CHAR('-');
+        number = (~number) + 1;
+    }
+    UnityPrintNumberUnsigned(number);
+}
+
+/*-----------------------------------------------
+ * basically do an itoa using as little ram as possible */
+void UnityPrintNumberUnsigned(const UNITY_UINT number)
+{
+    UNITY_UINT divisor = 1;
+
+    /* figure out initial divisor */
+    while (number / divisor > 9)
+    {
+        divisor *= 10;
+    }
+
+    /* now mod and print, then divide divisor */
+    do
+    {
+        UNITY_OUTPUT_CHAR((char)('0' + (number / divisor % 10)));
+        divisor /= 10;
+    } while (divisor > 0);
+}
+
+/-----------------------------------------------/
+void UnityPrintNumberHex(const UNITY_UINT number, const char nibbles_to_print)
+{
+    int nibble;
+    char nibbles = nibbles_to_print;
+
+    if ((unsigned)nibbles > UNITY_MAX_NIBBLES)
+    {
+        nibbles = UNITY_MAX_NIBBLES;
+    }
+
+    while (nibbles > 0)
+    {
+        nibbles--;
+        nibble = (int)(number >> (nibbles * 4)) & 0x0F;
+        if (nibble <= 9)
+        {
+            UNITY_OUTPUT_CHAR((char)('0' + nibble));
+        }
+        else
+        {
+            UNITY_OUTPUT_CHAR((char)('A' - 10 + nibble));
+        }
+    }
+}
+
+/-----------------------------------------------/
+void UnityPrintMask(const UNITY_UINT mask, const UNITY_UINT number)
+{
+    UNITY_UINT current_bit = (UNITY_UINT)1 << (UNITY_INT_WIDTH - 1);
+    UNITY_INT32 i;
+
+    for (i = 0; i < UNITY_INT_WIDTH; i++)
+    {
+        if (current_bit & mask)
+        {
+            if (current_bit & number)
+            {
+                UNITY_OUTPUT_CHAR('1');
+            }
+            else
+            {
+                UNITY_OUTPUT_CHAR('0');
+            }
+        }
+        else
+        {
+            UNITY_OUTPUT_CHAR('X');
+        }
+        current_bit = current_bit >> 1;
+    }
+}
+
+/-----------------------------------------------/
+#ifndef UNITY_EXCLUDE_FLOAT_PRINT
+/*
+ * This function prints a floating-point value in a format similar to
+ * printf("%.7g") on a single-precision machine or printf("%.9g") on a
+ * double-precision machine.  The 7th digit won't always be totally correct
+ * in single-precision operation (for that level of accuracy, a more
+ * complicated algorithm would be needed).
+ */
+void UnityPrintFloat(const UNITY_DOUBLE input_number)
+{
+#ifdef UNITY_INCLUDE_DOUBLE
+    static const int sig_digits = 9;
+    static const UNITY_INT32 min_scaled = 100000000;
+    static const UNITY_INT32 max_scaled = 1000000000;
+#else
+    static const int sig_digits = 7;
+    static const UNITY_INT32 min_scaled = 1000000;
+    static const UNITY_INT32 max_scaled = 10000000;
+#endif
+
+    UNITY_DOUBLE number = input_number;
+
+    /* print minus sign (does not handle negative zero) */
+    if (number < 0.0f)
+    {
+        UNITY_OUTPUT_CHAR('-');
+        number = -number;
+    }
+
+    /* handle zero, NaN, and +/- infinity */
+    if (number == 0.0f)
+    {
+        UnityPrint("0");
+    }
+    else if (isnan(number))
+    {
+        UnityPrint("nan");
+    }
+    else if (isinf(number))
+    {
+        UnityPrint("inf");
+    }
+    else
+    {
+        UNITY_INT32 n_int = 0, n;
+        int exponent = 0;
+        int decimals, digits;
+        char buf[16] = {0};
+
+        /*
+         * Scale up or down by powers of 10.  To minimize rounding error,
+         * start with a factor/divisor of 10^10, which is the largest
+         * power of 10 that can be represented exactly.  Finally, compute
+         * (exactly) the remaining power of 10 and perform one more
+         * multiplication or division.
+         */
