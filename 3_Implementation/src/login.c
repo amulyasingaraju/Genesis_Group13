@@ -29,34 +29,31 @@ void login()
     }
     fread (&fileHeaderInfo,FILE_HEADER_SIZE, 1, fp);
     fclose(fp);
-    do
+    while(L<3)
     {
         printf("\n\n\n\t\t\t\tUsername:");
         fgets(userName,MAX_SIZE_USER_NAME,stdin);
         printf("\n\t\t\t\tPassword:");
         fgets(password,MAX_SIZE_PASSWORD,stdin);
-        if((!strcmp(userName,fileHeaderInfo.username)) && (!strcmp(password,fileHeaderInfo.password)))
-        {   int user_input(void);
-            int port_input(void);
-            printf("Login Successful!");
-            user_input();
-            port_input();
-        }
-        else
+        int k=0;
+        while(k<3)
         {
-            printf("\t\t\t\tLogin Failed Enter Again Username & Password\n\n");
-            L++;
+            if((!strcmp(userName,fileHeaderInfo.username)) && (!strcmp(password,fileHeaderInfo.password)))
+            {   
+                int user_input(void);
+                int port_input(void);
+                printf("Login Successful!");
+                user_input();
+                port_input();
+                return 0;
+            }
+            k++;
         }
-    break;
+        L++; 
+    printf("\n\n\t\t\t\twrong username and password, please try again");
     }
-    while(L<=3);
-    if(L>3)
-    {
-        headMessage("Login Failed");
-        printf("\t\t\t\tSorry,Unknown User.");
-        getchar();
-        system("cls");
-    }
+    printf("\n\n\t\t\t\tYou have exceeded 3 chances! terminating program\n\n");
+    exit(0);
 }
 int isFileExists(const char *path)
 {
