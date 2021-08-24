@@ -36,7 +36,8 @@ void login()
         printf("\n\t\t\t\tPassword:");
         fgets(password,MAX_SIZE_PASSWORD,stdin);
         if((!strcmp(userName,fileHeaderInfo.username)) && (!strcmp(password,fileHeaderInfo.password)))
-        {
+        {   int user_input(void);
+            int port_input(void);
             printf("Login Successful!");
             user_input();
             port_input();

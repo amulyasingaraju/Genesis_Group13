@@ -146,7 +146,7 @@ printf("\t\t\t\t\t**** Customer Screen ****\n\n");
  }
  printf("\t\t\t\t\t**** Owner Screen ****\n\n");
  printf("Current Load demand is %d Wh.\n\n",load_demand);
- 
+ int power_compare(int,int,int);
  power_compare(pv_power,load_demand,PROFITGRID);
  //return load_demand;
 }

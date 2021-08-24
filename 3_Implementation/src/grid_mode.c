@@ -1,14 +1,16 @@
 #include<stdio.h>
 #include"header.h"
 
-int remaning_grid_power;
-int earning2 = 0; // earning in grid mode for pv power sending to grid
-int pay_to_grid = 0;
+
 
 
 
 int grid_mode(int pv_power, int load_demand, int PROFITGRID)
 {
+    
+    int earning2 = 0; // earning in grid mode for pv power sending to grid
+    int pay_to_grid = 0;
+
     printf("Currently Grid mode is operating.\n\n");
     printf("Power Used for charging EV is %d Wh.\n\n",load_demand);
 

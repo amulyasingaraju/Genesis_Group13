@@ -69,4 +69,4 @@ clean:
 	$(RM) *.$(EXEC)
 	$(RM) *.gcda
 	$(RM) *.gcno
-	$(RM) *.c.gcov
+	$(RM) *.c.gcov	

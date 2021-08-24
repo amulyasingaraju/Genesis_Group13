@@ -9,13 +9,13 @@
 
 void welcomeMessage(void);
 void init(void);
-login();
+void login(void);
+int power_calculation(int, int);
 int user_input(void);
 int port_input(void);
 int power_compare(int,int,int);
 int islanded_mode(int,int,int);
 int grid_mode(int,int,int);
-int earnedbyev(int);
-int totalprofit(int,int);
+
 
 #endif
