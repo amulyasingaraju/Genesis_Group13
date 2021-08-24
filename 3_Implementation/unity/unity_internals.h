@@ -40,15 +40,15 @@
 #include <limits.h>
 #endif
 
-#if defined _GNUC_
-#    define UNITY_FUNCTION_ATTR(a) _attribute_((a))
+#if defined __GNUC__
+#    define UNITY_FUNCTION_ATTR(a) __attribute__((a))
 #else
 #    define UNITY_FUNCTION_ATTR(a) /* ignore */
 #endif
 
 /*-------------------------------------------------------
  * Guess Widths If Not Specified
- -------------------------------------------------------/
+ *-------------------------------------------------------*/
 
 /* Determine the size of an int, if not already specified.
  * We cannot use sizeof(int), because it is not yet defined
@@ -102,7 +102,7 @@
 
 /*-------------------------------------------------------
  * Int Support (Define types based on detected sizes)
- -------------------------------------------------------/
+ *-------------------------------------------------------*/
 
 #if (UNITY_INT_WIDTH == 32)
     typedef unsigned char   UNITY_UINT8;
@@ -124,7 +124,7 @@
 
 /*-------------------------------------------------------
  * 64-bit Support
- -------------------------------------------------------/
+ *-------------------------------------------------------*/
 
 /* Auto-detect 64 Bit Support */
 #ifndef UNITY_SUPPORT_64
@@ -157,7 +157,7 @@
 
 /*-------------------------------------------------------
  * Pointer Support
- -------------------------------------------------------/
+ *-------------------------------------------------------*/
 
 #if (UNITY_POINTER_WIDTH == 32)
   #define UNITY_PTR_TO_INT UNITY_INT32
@@ -182,7 +182,7 @@
 
 /*-------------------------------------------------------
  * Float Support
- -------------------------------------------------------/
+ *-------------------------------------------------------*/
 
 #ifdef UNITY_EXCLUDE_FLOAT
 
@@ -221,7 +221,7 @@ typedef UNITY_FLOAT_TYPE UNITY_FLOAT;
 
 /*-------------------------------------------------------
  * Double Float Support
- -------------------------------------------------------/
+ *-------------------------------------------------------*/
 
 /* unlike float, we DON'T include by default */
 #if defined(UNITY_EXCLUDE_DOUBLE) || !defined(UNITY_INCLUDE_DOUBLE)
@@ -257,7 +257,7 @@ typedef UNITY_FLOAT_TYPE UNITY_FLOAT;
 
 /*-------------------------------------------------------
  * Output Method: stdout (DEFAULT)
- -------------------------------------------------------/
+ *-------------------------------------------------------*/
 #ifndef UNITY_OUTPUT_CHAR
   /* Default to using putchar, which is defined in stdio.h */
   #include <stdio.h>
@@ -333,7 +333,7 @@ typedef UNITY_FLOAT_TYPE UNITY_FLOAT;
         UnityPrintNumberUnsigned(execTimeMs); \
         UnityPrint(" ms)"); \
         }
-    #elif defined(_unix_)
+    #elif defined(__unix__)
       #include <time.h>
       #define UNITY_TIME_TYPE struct timespec
       #define UNITY_GET_TIME(t) clock_gettime(CLOCK_MONOTONIC, &t)
@@ -368,7 +368,7 @@ typedef UNITY_FLOAT_TYPE UNITY_FLOAT;
 
 /*-------------------------------------------------------
  * Footprint
- -------------------------------------------------------/
+ *-------------------------------------------------------*/
 
 #ifndef UNITY_LINE_TYPE
 #define UNITY_LINE_TYPE UNITY_UINT
@@ -380,7 +380,7 @@ typedef UNITY_FLOAT_TYPE UNITY_FLOAT;
 
 /*-------------------------------------------------------
  * Internal Structs Needed
- -------------------------------------------------------/
+ *-------------------------------------------------------*/
 
 typedef void (*UnityTestFunction)(void);
 
@@ -480,7 +480,7 @@ extern struct UNITY_STORAGE_T Unity;
 
 /*-------------------------------------------------------
  * Test Suite Management
- -------------------------------------------------------/
+ *-------------------------------------------------------*/
 
 void UnityBegin(const char* filename);
 int  UnityEnd(void);
@@ -495,7 +495,7 @@ void UnityDefaultTestRun(UnityTestFunction Func, const char* FuncName, const int
 
 /*-------------------------------------------------------
  * Details Support
- -------------------------------------------------------/
+ *-------------------------------------------------------*/
 
 #ifdef UNITY_EXCLUDE_DETAILS
 #define UNITY_CLR_DETAILS()
@@ -521,7 +521,7 @@ void UNITY_PRINT_TEST_CONTEXT(void);
 
 /*-------------------------------------------------------
  * Test Output
- -------------------------------------------------------/
+ *-------------------------------------------------------*/
 
 void UnityPrint(const char* string);
 
@@ -539,6 +539,7 @@ void UnityPrintNumberHex(const UNITY_UINT number, const char nibbles_to_print);
 #ifndef UNITY_EXCLUDE_FLOAT_PRINT
 void UnityPrintFloat(const UNITY_DOUBLE input_number);
 #endif
+
 /*-------------------------------------------------------
  * Test Assertion Functions
  *-------------------------------------------------------
@@ -662,7 +663,7 @@ void UnityAssertDoubleSpecial(const UNITY_DOUBLE actual,
 
 /*-------------------------------------------------------
  * Helpers
- -------------------------------------------------------/
+ *-------------------------------------------------------*/
 
 UNITY_INTERNAL_PTR UnityNumToPtr(const UNITY_INT num, const UNITY_UINT8 size);
 #ifndef UNITY_EXCLUDE_FLOAT
@@ -674,7 +675,7 @@ UNITY_INTERNAL_PTR UnityDoubleToPtr(const double num);
 
 /*-------------------------------------------------------
  * Error Strings We Might Need
- -------------------------------------------------------/
+ *-------------------------------------------------------*/
 
 extern const char UnityStrOk[];
 extern const char UnityStrPass[];
@@ -688,7 +689,7 @@ extern const char UnityStrErrShorthand[];
 
 /*-------------------------------------------------------
  * Test Running Macros
- -------------------------------------------------------/
+ *-------------------------------------------------------*/
 
 #ifndef UNITY_EXCLUDE_SETJMP_H
 #define TEST_PROTECT() (setjmp(Unity.AbortFrame) == 0)
@@ -698,15 +699,15 @@ extern const char UnityStrErrShorthand[];
 #define TEST_ABORT() return
 #endif
 
-/* This tricky series of macros gives us an optional line argument to treat it as RUN_TEST(func, num=_LINE_) */
+/* This tricky series of macros gives us an optional line argument to treat it as RUN_TEST(func, num=__LINE__) */
 #ifndef RUN_TEST
-#ifdef _STDC_VERSION_
-#if _STDC_VERSION_ >= 199901L
+#ifdef __STDC_VERSION__
+#if __STDC_VERSION__ >= 199901L
 #define UNITY_SUPPORT_VARIADIC_MACROS
 #endif
 #endif
 #ifdef UNITY_SUPPORT_VARIADIC_MACROS
-#define RUN_TEST(...) RUN_TEST_AT_LINE(_VA_ARGS, __LINE_, throwaway)
+#define RUN_TEST(...) RUN_TEST_AT_LINE(__VA_ARGS__, __LINE__, throwaway)
 #define RUN_TEST_AT_LINE(func, line, ...) UnityDefaultTestRun(func, #func, line)
 #endif
 #endif
@@ -716,7 +717,7 @@ extern const char UnityStrErrShorthand[];
 #ifdef CMOCK
 #define RUN_TEST(func, num) UnityDefaultTestRun(func, #func, num)
 #else
-#define RUN_TEST(func) UnityDefaultTestRun(func, #func, _LINE_)
+#define RUN_TEST(func) UnityDefaultTestRun(func, #func, __LINE__)
 #endif
 #endif
 
@@ -724,11 +725,11 @@ extern const char UnityStrErrShorthand[];
 #define TEST_IS_IGNORED (Unity.CurrentTestIgnored)
 #define UNITY_NEW_TEST(a) \
     Unity.CurrentTestName = (a); \
-    Unity.CurrentTestLineNumber = (UNITY_LINE_TYPE)(_LINE_); \
+    Unity.CurrentTestLineNumber = (UNITY_LINE_TYPE)(__LINE__); \
     Unity.NumberOfTests++;
 
 #ifndef UNITY_BEGIN
-#define UNITY_BEGIN() UnityBegin(_FILE_)
+#define UNITY_BEGIN() UnityBegin(__FILE__)
 #endif
 
 #ifndef UNITY_END
@@ -747,7 +748,7 @@ extern const char UnityStrErrShorthand[];
 
 /*-----------------------------------------------
  * Command Line Argument Support
- -----------------------------------------------/
+ *-----------------------------------------------*/
 
 #ifdef UNITY_USE_COMMAND_LINE_ARGS
 int UnityParseOptions(int argc, char** argv);
@@ -756,13 +757,14 @@ int UnityTestMatches(void);
 
 /*-------------------------------------------------------
  * Basic Fail and Ignore
- -------------------------------------------------------/
+ *-------------------------------------------------------*/
 
 #define UNITY_TEST_FAIL(line, message)   UnityFail(   (message), (UNITY_LINE_TYPE)(line))
 #define UNITY_TEST_IGNORE(line, message) UnityIgnore( (message), (UNITY_LINE_TYPE)(line))
+
 /*-------------------------------------------------------
  * Test Asserts
- -------------------------------------------------------/
+ *-------------------------------------------------------*/
 
 #define UNITY_TEST_ASSERT(condition, line, message)                                              do {if (condition) {} else {UNITY_TEST_FAIL((UNITY_LINE_TYPE)(line), (message));}} while(0)
 #define UNITY_TEST_ASSERT_NULL(pointer, line, message)                                           UNITY_TEST_ASSERT(((pointer) == NULL),  (UNITY_LINE_TYPE)(line), (message))
