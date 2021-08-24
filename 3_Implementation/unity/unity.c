@@ -1983,3 +1983,127 @@ int IsStringInBiggerString(const char* longstring, const char* shortstring)
     {
         return 1;
     }
+while (*lptr)
+    {
+        lnext = lptr + 1;
+
+        /* If they current bytes match, go on to the next bytes */
+        while (*lptr && *sptr && (*lptr == *sptr))
+        {
+            lptr++;
+            sptr++;
+
+            /* We're done if we match the entire string or up to a wildcard */
+            if (sptr == '')
+                return 1;
+            if (*sptr == ',')
+                return 1;
+            if (*sptr == '"')
+                return 1;
+            if (*sptr == '\'')
+                return 1;
+            if (*sptr == ':')
+                return 2;
+            if (*sptr == 0)
+                return 1;
+        }
+
+        /* Otherwise we start in the long pointer 1 character further and try again */
+        lptr = lnext;
+        sptr = shortstring;
+    }
+
+    return 0;
+}
+
+/-----------------------------------------------/
+int UnityStringArgumentMatches(const char* str)
+{
+    int retval;
+    const char* ptr1;
+    const char* ptr2;
+    const char* ptrf;
+
+    /* Go through the options and get the substrings for matching one at a time */
+    ptr1 = str;
+    while (ptr1[0] != 0)
+    {
+        if ((ptr1[0] == '"') || (ptr1[0] == '\''))
+        {
+            ptr1++;
+        }
+
+        /* look for the start of the next partial */
+        ptr2 = ptr1;
+        ptrf = 0;
+        do
+        {
+            ptr2++;
+            if ((ptr2[0] == ':') && (ptr2[1] != 0) && (ptr2[0] != '\'') && (ptr2[0] != '"') && (ptr2[0] != ','))
+            {
+                ptrf = &ptr2[1];
+            }
+        } while ((ptr2[0] != 0) && (ptr2[0] != '\'') && (ptr2[0] != '"') && (ptr2[0] != ','));
+
+        while ((ptr2[0] != 0) && ((ptr2[0] == ':') || (ptr2[0] == '\'') || (ptr2[0] == '"') || (ptr2[0] == ',')))
+        {
+            ptr2++;
+        }
+
+        /* done if complete filename match */
+        retval = IsStringInBiggerString(Unity.TestFile, ptr1);
+        if (retval == 1)
+        {
+            return retval;
+        }
+
+        /* done if testname match after filename partial match */
+        if ((retval == 2) && (ptrf != 0))
+        {
+            if (IsStringInBiggerString(Unity.CurrentTestName, ptrf))
+            {
+                return 1;
+            }
+        }
+
+        /* done if complete testname match */
+        if (IsStringInBiggerString(Unity.CurrentTestName, ptr1) == 1)
+        {
+            return 1;
+        }
+
+        ptr1 = ptr2;
+    }
+
+    /* we couldn't find a match for any substrings */
+    return 0;
+}
+
+/-----------------------------------------------/
+int UnityTestMatches(void)
+{
+    /* Check if this test name matches the included test pattern */
+    int retval;
+    if (UnityOptionIncludeNamed)
+    {
+        retval = UnityStringArgumentMatches(UnityOptionIncludeNamed);
+    }
+    else
+    {
+        retval = 1;
+    }
+
+    /* Check if this test name matches the excluded test pattern */
+    if (UnityOptionExcludeNamed)
+    {
+        if (UnityStringArgumentMatches(UnityOptionExcludeNamed))
+        {
+            retval = 0;
+        }
+    }
+
+    return retval;
+}
+
+#endif /* UNITY_USE_COMMAND_LINE_ARGS */
+/-----------------------------------------------/
