@@ -9,8 +9,9 @@ E-mobility is emerging as one of the fastest mode of trans-portation as it serve
 
 # BADGES
 
-Build | Code Quality | Unity |            [Git Inspector]              |
------------------|-----------------|-----------------|-----------------|
+Build | Code Quality | Unity | [Git Inspector] | Codacy | Code Inspector
+-----------------|-----------------|-----------------|-----------------| --------- | -----------
+  | | | | | [![Codacy Badge](https://app.codacy.com/project/badge/Grade/cf6b96e9ba0d453b9660c0b074d11983)](https://www.codacy.com/gh/amulyasingaraju/SDLC_13_GoGreen/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=amulyasingaraju/SDLC_13_GoGreen&amp;utm_campaign=Badge_Grade) | ![Code Inspector Badge](https://www.code-inspector.com/project/26808/status/svg)|
 
 ## Folder Structure
 | Folder  | Description  |
