@@ -379,3 +379,211 @@ void UnityPrintFloat(const UNITY_DOUBLE input_number)
          * (exactly) the remaining power of 10 and perform one more
          * multiplication or division.
          */
+        if (number < 1.0f)
+        {
+            UNITY_DOUBLE factor = 1.0f;
+
+            while (number < (UNITY_DOUBLE)max_scaled / 1e10f)  { number *= 1e10f; exponent -= 10; }
+            while (number * factor < (UNITY_DOUBLE)min_scaled) { factor *= 10.0f; exponent--; }
+
+            number *= factor;
+        }
+        else if (number > (UNITY_DOUBLE)max_scaled)
+        {
+            UNITY_DOUBLE divisor = 1.0f;
+
+            while (number > (UNITY_DOUBLE)min_scaled * 1e10f)   { number  /= 1e10f; exponent += 10; }
+            while (number / divisor > (UNITY_DOUBLE)max_scaled) { divisor *= 10.0f; exponent++; }
+
+            number /= divisor;
+        }
+        else
+        {
+            /*
+             * In this range, we can split off the integer part before
+             * doing any multiplications.  This reduces rounding error by
+             * freeing up significant bits in the fractional part.
+             */
+            UNITY_DOUBLE factor = 1.0f;
+            n_int = (UNITY_INT32)number;
+            number -= (UNITY_DOUBLE)n_int;
+
+            while (n_int < min_scaled) { n_int *= 10; factor *= 10.0f; exponent--; }
+
+            number *= factor;
+        }
+
+        /* round to nearest integer */
+        n = ((UNITY_INT32)(number + number) + 1) / 2;
+
+#ifndef UNITY_ROUND_TIES_AWAY_FROM_ZERO
+        /* round to even if exactly between two integers */
+        if ((n & 1) && (((UNITY_DOUBLE)n - number) == 0.5f))
+            n--;
+#endif
+
+        n += n_int;
+
+        if (n >= max_scaled)
+        {
+            n = min_scaled;
+            exponent++;
+        }
+
+        /* determine where to place decimal point */
+        decimals = ((exponent <= 0) && (exponent >= -(sig_digits + 3))) ? (-exponent) : (sig_digits - 1);
+        exponent += decimals;
+
+        /* truncate trailing zeroes after decimal point */
+        while ((decimals > 0) && ((n % 10) == 0))
+        {
+            n /= 10;
+            decimals--;
+        }
+
+        /* build up buffer in reverse order */
+        digits = 0;
+        while ((n != 0) || (digits < (decimals + 1)))
+        {
+            buf[digits++] = (char)('0' + n % 10);
+            n /= 10;
+        }
+        while (digits > 0)
+        {
+            if (digits == decimals) { UNITY_OUTPUT_CHAR('.'); }
+            UNITY_OUTPUT_CHAR(buf[--digits]);
+        }
+
+        /* print exponent if needed */
+        if (exponent != 0)
+        {
+            UNITY_OUTPUT_CHAR('e');
+
+            if (exponent < 0)
+            {
+                UNITY_OUTPUT_CHAR('-');
+                exponent = -exponent;
+            }
+            else
+            {
+                UNITY_OUTPUT_CHAR('+');
+            }
+
+            digits = 0;
+            while ((exponent != 0) || (digits < 2))
+            {
+                buf[digits++] = (char)('0' + exponent % 10);
+                exponent /= 10;
+            }
+            while (digits > 0)
+            {
+                UNITY_OUTPUT_CHAR(buf[--digits]);
+            }
+        }
+    }
+}
+#endif /* ! UNITY_EXCLUDE_FLOAT_PRINT */
+
+/-----------------------------------------------/
+static void UnityTestResultsBegin(const char* file, const UNITY_LINE_TYPE line)
+{
+#ifdef UNITY_OUTPUT_FOR_ECLIPSE
+    UNITY_OUTPUT_CHAR('(');
+    UnityPrint(file);
+    UNITY_OUTPUT_CHAR(':');
+    UnityPrintNumber((UNITY_INT)line);
+    UNITY_OUTPUT_CHAR(')');
+    UNITY_OUTPUT_CHAR(' ');
+    UnityPrint(Unity.CurrentTestName);
+    UNITY_OUTPUT_CHAR(':');
+#else
+#ifdef UNITY_OUTPUT_FOR_IAR_WORKBENCH
+    UnityPrint("<SRCREF line=");
+    UnityPrintNumber((UNITY_INT)line);
+    UnityPrint(" file=\"");
+    UnityPrint(file);
+    UNITY_OUTPUT_CHAR('"');
+    UNITY_OUTPUT_CHAR('>');
+    UnityPrint(Unity.CurrentTestName);
+    UnityPrint("</SRCREF> ");
+#else
+#ifdef UNITY_OUTPUT_FOR_QT_CREATOR
+    UnityPrint("file://");
+    UnityPrint(file);
+    UNITY_OUTPUT_CHAR(':');
+    UnityPrintNumber((UNITY_INT)line);
+    UNITY_OUTPUT_CHAR(' ');
+    UnityPrint(Unity.CurrentTestName);
+    UNITY_OUTPUT_CHAR(':');
+#else
+    UnityPrint(file);
+    UNITY_OUTPUT_CHAR(':');
+    UnityPrintNumber((UNITY_INT)line);
+    UNITY_OUTPUT_CHAR(':');
+    UnityPrint(Unity.CurrentTestName);
+    UNITY_OUTPUT_CHAR(':');
+#endif
+#endif
+#endif
+}
+
+/-----------------------------------------------/
+static void UnityTestResultsFailBegin(const UNITY_LINE_TYPE line)
+{
+    UnityTestResultsBegin(Unity.TestFile, line);
+    UnityPrint(UnityStrFail);
+    UNITY_OUTPUT_CHAR(':');
+}
+
+/-----------------------------------------------/
+void UnityConcludeTest(void)
+{
+    if (Unity.CurrentTestIgnored)
+    {
+        Unity.TestIgnores++;
+    }
+    else if (!Unity.CurrentTestFailed)
+    {
+        UnityTestResultsBegin(Unity.TestFile, Unity.CurrentTestLineNumber);
+        UnityPrint(UnityStrPass);
+    }
+    else
+    {
+        Unity.TestFailures++;
+    }
+
+    Unity.CurrentTestFailed = 0;
+    Unity.CurrentTestIgnored = 0;
+    UNITY_PRINT_EXEC_TIME();
+    UNITY_PRINT_EOL();
+    UNITY_FLUSH_CALL();
+}
+
+/-----------------------------------------------/
+static void UnityAddMsgIfSpecified(const char* msg)
+{
+    if (msg)
+    {
+        UnityPrint(UnityStrSpacer);
+
+#ifdef UNITY_PRINT_TEST_CONTEXT
+        UNITY_PRINT_TEST_CONTEXT();
+#endif
+#ifndef UNITY_EXCLUDE_DETAILS
+        if (Unity.CurrentDetail1)
+        {
+            UnityPrint(UnityStrDetail1Name);
+            UnityPrint(Unity.CurrentDetail1);
+            if (Unity.CurrentDetail2)
+            {
+                UnityPrint(UnityStrDetail2Name);
+                UnityPrint(Unity.CurrentDetail2);
+            }
+            UnityPrint(UnityStrSpacer);
+        }
+#endif
+        UnityPrint(msg);
+    }
+}
+
+/-----------------------------------------------/
