@@ -27,7 +27,7 @@ void test_grid_mode(void){
 void test_islanded_mode(void ){
    TEST_ASSERT_EQUAL((18), islanded_mode(18000,12000,100));
    TEST_ASSERT_EQUAL((63), islanded_mode(81000,60000,150));
-   TEST_ASSERT_EQUAL((60), islanded_mode(110000,90000,200));
+   TEST_ASSERT_EQUAL((63), islanded_mode(110000,90000,200));
 
 }
 void test_power_calculation(void){
