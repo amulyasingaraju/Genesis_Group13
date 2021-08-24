@@ -587,3 +587,314 @@ static void UnityAddMsgIfSpecified(const char* msg)
 }
 
 /-----------------------------------------------/
+static void UnityPrintExpectedAndActualStrings(const char* expected, const char* actual)
+{
+    UnityPrint(UnityStrExpected);
+    if (expected != NULL)
+    {
+        UNITY_OUTPUT_CHAR('\'');
+        UnityPrint(expected);
+        UNITY_OUTPUT_CHAR('\'');
+    }
+    else
+    {
+        UnityPrint(UnityStrNull);
+    }
+    UnityPrint(UnityStrWas);
+    if (actual != NULL)
+    {
+        UNITY_OUTPUT_CHAR('\'');
+        UnityPrint(actual);
+        UNITY_OUTPUT_CHAR('\'');
+    }
+    else
+    {
+        UnityPrint(UnityStrNull);
+    }
+}
+
+/-----------------------------------------------/
+static void UnityPrintExpectedAndActualStringsLen(const char* expected,
+                                                  const char* actual,
+                                                  const UNITY_UINT32 length)
+{
+    UnityPrint(UnityStrExpected);
+    if (expected != NULL)
+    {
+        UNITY_OUTPUT_CHAR('\'');
+        UnityPrintLen(expected, length);
+        UNITY_OUTPUT_CHAR('\'');
+    }
+    else
+    {
+        UnityPrint(UnityStrNull);
+    }
+    UnityPrint(UnityStrWas);
+    if (actual != NULL)
+    {
+        UNITY_OUTPUT_CHAR('\'');
+        UnityPrintLen(actual, length);
+        UNITY_OUTPUT_CHAR('\'');
+    }
+    else
+    {
+        UnityPrint(UnityStrNull);
+    }
+}
+
+/*-----------------------------------------------
+ * Assertion & Control Helpers
+ -----------------------------------------------/
+
+/-----------------------------------------------/
+static int UnityIsOneArrayNull(UNITY_INTERNAL_PTR expected,
+                               UNITY_INTERNAL_PTR actual,
+                               const UNITY_LINE_TYPE lineNumber,
+                               const char* msg)
+{
+    /* Both are NULL or same pointer */
+    if (expected == actual) { return 0; }
+
+    /* print and return true if just expected is NULL */
+    if (expected == NULL)
+    {
+        UnityTestResultsFailBegin(lineNumber);
+        UnityPrint(UnityStrNullPointerForExpected);
+        UnityAddMsgIfSpecified(msg);
+        return 1;
+    }
+
+    /* print and return true if just actual is NULL */
+    if (actual == NULL)
+    {
+        UnityTestResultsFailBegin(lineNumber);
+        UnityPrint(UnityStrNullPointerForActual);
+        UnityAddMsgIfSpecified(msg);
+        return 1;
+    }
+
+    return 0; /* return false if neither is NULL */
+}
+
+/*-----------------------------------------------
+ * Assertion Functions
+ -----------------------------------------------/
+
+/-----------------------------------------------/
+void UnityAssertBits(const UNITY_INT mask,
+                     const UNITY_INT expected,
+                     const UNITY_INT actual,
+                     const char* msg,
+                     const UNITY_LINE_TYPE lineNumber)
+{
+    RETURN_IF_FAIL_OR_IGNORE;
+
+    if ((mask & expected) != (mask & actual))
+    {
+        UnityTestResultsFailBegin(lineNumber);
+        UnityPrint(UnityStrExpected);
+        UnityPrintMask((UNITY_UINT)mask, (UNITY_UINT)expected);
+        UnityPrint(UnityStrWas);
+        UnityPrintMask((UNITY_UINT)mask, (UNITY_UINT)actual);
+        UnityAddMsgIfSpecified(msg);
+        UNITY_FAIL_AND_BAIL;
+    }
+}
+
+/-----------------------------------------------/
+void UnityAssertEqualNumber(const UNITY_INT expected,
+                            const UNITY_INT actual,
+                            const char* msg,
+                            const UNITY_LINE_TYPE lineNumber,
+                            const UNITY_DISPLAY_STYLE_T style)
+{
+    RETURN_IF_FAIL_OR_IGNORE;
+
+    if (expected != actual)
+    {
+        UnityTestResultsFailBegin(lineNumber);
+        UnityPrint(UnityStrExpected);
+        UnityPrintNumberByStyle(expected, style);
+        UnityPrint(UnityStrWas);
+        UnityPrintNumberByStyle(actual, style);
+        UnityAddMsgIfSpecified(msg);
+        UNITY_FAIL_AND_BAIL;
+    }
+}
+
+/-----------------------------------------------/
+void UnityAssertGreaterOrLessOrEqualNumber(const UNITY_INT threshold,
+                                           const UNITY_INT actual,
+                                           const UNITY_COMPARISON_T compare,
+                                           const char *msg,
+                                           const UNITY_LINE_TYPE lineNumber,
+                                           const UNITY_DISPLAY_STYLE_T style)
+{
+    int failed = 0;
+    RETURN_IF_FAIL_OR_IGNORE;
+
+    if ((threshold == actual) && (compare & UNITY_EQUAL_TO)) { return; }
+    if ((threshold == actual))                               { failed = 1; }
+
+    if ((style & UNITY_DISPLAY_RANGE_INT) == UNITY_DISPLAY_RANGE_INT)
+    {
+        if ((actual > threshold) && (compare & UNITY_SMALLER_THAN)) { failed = 1; }
+        if ((actual < threshold) && (compare & UNITY_GREATER_THAN)) { failed = 1; }
+    }
+    else /* UINT or HEX */
+    {
+        if (((UNITY_UINT)actual > (UNITY_UINT)threshold) && (compare & UNITY_SMALLER_THAN)) { failed = 1; }
+        if (((UNITY_UINT)actual < (UNITY_UINT)threshold) && (compare & UNITY_GREATER_THAN)) { failed = 1; }
+    }
+
+    if (failed)
+    {
+        UnityTestResultsFailBegin(lineNumber);
+        UnityPrint(UnityStrExpected);
+        UnityPrintNumberByStyle(actual, style);
+        if (compare & UNITY_GREATER_THAN) { UnityPrint(UnityStrGt);       }
+        if (compare & UNITY_SMALLER_THAN) { UnityPrint(UnityStrLt);       }
+        if (compare & UNITY_EQUAL_TO)     { UnityPrint(UnityStrOrEqual);  }
+        if (compare == UNITY_NOT_EQUAL)   { UnityPrint(UnityStrNotEqual); }
+        UnityPrintNumberByStyle(threshold, style);
+        UnityAddMsgIfSpecified(msg);
+        UNITY_FAIL_AND_BAIL;
+    }
+}
+
+#define UnityPrintPointlessAndBail()       \
+{                                          \
+    UnityTestResultsFailBegin(lineNumber); \
+    UnityPrint(UnityStrPointless);         \
+    UnityAddMsgIfSpecified(msg);           \
+    UNITY_FAIL_AND_BAIL; }
+
+/-----------------------------------------------/
+void UnityAssertEqualIntArray(UNITY_INTERNAL_PTR expected,
+                              UNITY_INTERNAL_PTR actual,
+                              const UNITY_UINT32 num_elements,
+                              const char* msg,
+                              const UNITY_LINE_TYPE lineNumber,
+                              const UNITY_DISPLAY_STYLE_T style,
+                              const UNITY_FLAGS_T flags)
+{
+    UNITY_UINT32 elements  = num_elements;
+    unsigned int length    = style & 0xF;
+    unsigned int increment = 0;
+
+    RETURN_IF_FAIL_OR_IGNORE;
+
+    if (num_elements == 0)
+    {
+        UnityPrintPointlessAndBail();
+    }
+
+    if (expected == actual)
+    {
+        return; /* Both are NULL or same pointer */
+    }
+
+    if (UnityIsOneArrayNull(expected, actual, lineNumber, msg))
+    {
+        UNITY_FAIL_AND_BAIL;
+    }
+
+    while ((elements > 0) && (elements--))
+    {
+        UNITY_INT expect_val;
+        UNITY_INT actual_val;
+
+        switch (length)
+        {
+            case 1:
+                expect_val = (UNITY_PTR_ATTRIBUTE const UNITY_INT8)expected;
+                actual_val = (UNITY_PTR_ATTRIBUTE const UNITY_INT8)actual;
+                increment  = sizeof(UNITY_INT8);
+                break;
+
+            case 2:
+                expect_val = (UNITY_PTR_ATTRIBUTE const UNITY_INT16)expected;
+                actual_val = (UNITY_PTR_ATTRIBUTE const UNITY_INT16)actual;
+                increment  = sizeof(UNITY_INT16);
+                break;
+
+#ifdef UNITY_SUPPORT_64
+            case 8:
+                expect_val = (UNITY_PTR_ATTRIBUTE const UNITY_INT64)expected;
+                actual_val = (UNITY_PTR_ATTRIBUTE const UNITY_INT64)actual;
+                increment  = sizeof(UNITY_INT64);
+                break;
+#endif
+
+            default: /* default is length 4 bytes */
+            case 4:
+                expect_val = (UNITY_PTR_ATTRIBUTE const UNITY_INT32)expected;
+                actual_val = (UNITY_PTR_ATTRIBUTE const UNITY_INT32)actual;
+                increment  = sizeof(UNITY_INT32);
+                length = 4;
+                break;
+        }
+
+        if (expect_val != actual_val)
+        {
+            if ((style & UNITY_DISPLAY_RANGE_UINT) && (length < (UNITY_INT_WIDTH / 8)))
+            {   /* For UINT, remove sign extension (padding 1's) from signed type casts above */
+                UNITY_INT mask = 1;
+                mask = (mask << 8 * length) - 1;
+                expect_val &= mask;
+                actual_val &= mask;
+            }
+            UnityTestResultsFailBegin(lineNumber);
+            UnityPrint(UnityStrElement);
+            UnityPrintNumberUnsigned(num_elements - elements - 1);
+            UnityPrint(UnityStrExpected);
+            UnityPrintNumberByStyle(expect_val, style);
+            UnityPrint(UnityStrWas);
+            UnityPrintNumberByStyle(actual_val, style);
+            UnityAddMsgIfSpecified(msg);
+            UNITY_FAIL_AND_BAIL;
+        }
+        /* Walk through array by incrementing the pointers */
+        if (flags == UNITY_ARRAY_TO_ARRAY)
+        {
+            expected = (UNITY_INTERNAL_PTR)((const char*)expected + increment);
+        }
+        actual = (UNITY_INTERNAL_PTR)((const char*)actual + increment);
+    }
+}
+
+/-----------------------------------------------/
+#ifndef UNITY_EXCLUDE_FLOAT
+/* Wrap this define in a function with variable types as float or double */
+#define UNITY_FLOAT_OR_DOUBLE_WITHIN(delta, expected, actual, diff)                           \
+    if (isinf(expected) && isinf(actual) && (((expected) < 0) == ((actual) < 0))) return 1;   \
+    if (UNITY_NAN_CHECK) return 1;                                                            \
+    (diff) = (actual) - (expected);                                                           \
+    if ((diff) < 0) (diff) = -(diff);                                                         \
+    if ((delta) < 0) (delta) = -(delta);                                                      \
+    return !(isnan(diff) || isinf(diff) || ((diff) > (delta)))
+    /* This first part of this condition will catch any NaN or Infinite values */
+#ifndef UNITY_NAN_NOT_EQUAL_NAN
+  #define UNITY_NAN_CHECK isnan(expected) && isnan(actual)
+#else
+  #define UNITY_NAN_CHECK 0
+#endif
+
+#ifndef UNITY_EXCLUDE_FLOAT_PRINT
+  #define UNITY_PRINT_EXPECTED_AND_ACTUAL_FLOAT(expected, actual) \
+  {                                                               \
+    UnityPrint(UnityStrExpected);                                 \
+    UnityPrintFloat(expected);                                    \
+    UnityPrint(UnityStrWas);                                      \
+    UnityPrintFloat(actual); }
+#else
+  #define UNITY_PRINT_EXPECTED_AND_ACTUAL_FLOAT(expected, actual) \
+    UnityPrint(UnityStrDelta)
+#endif /* UNITY_EXCLUDE_FLOAT_PRINT */
+
+/-----------------------------------------------/
+static int UnityFloatsWithin(UNITY_FLOAT delta, UNITY_FLOAT expected, UNITY_FLOAT actual)
+{
+    UNITY_FLOAT diff;
+    UNITY_FLOAT_OR_DOUBLE_WITHIN(delta, expected, actual, diff);
+}
