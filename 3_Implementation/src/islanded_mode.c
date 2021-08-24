@@ -20,6 +20,6 @@ int islanded_mode(int pv_power, int load_demand,int PROFITGRID)
       printf("Power Used for charging EV is %d Wh.\n\n",load_demand);
 
     }
-    printf("Today's total profit is Rs %d",EARNINGG+PROFITGRID);
+    printf("\n\nToday's total profit is Rs %d",EARNINGG+PROFITGRID);
     return EARNINGG;
 }

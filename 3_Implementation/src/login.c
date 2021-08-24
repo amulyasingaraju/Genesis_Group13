@@ -2,11 +2,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
-#define MAX_SIZE_USER_NAME 30
-#define MAX_SIZE_PASSWORD  20
-#define FILE_NAME  "EVStation.bin"
-#define FILE_HEADER_SIZE  sizeof(sFileHeader)
-#include"header.h"
+
+/*
 typedef struct//to call the program
 {
     char username[MAX_SIZE_USER_NAME];//username
@@ -68,4 +65,58 @@ int isFileExists(const char *path)
         fclose(fp);
     }
     return status;
+}*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+
+typedef struct owner_details
+{
+     char uname[10];
+     char pword[10];
+}owner;
+char name[1][10]={"abcdef"};
+char pass[1][10]={"abcdef"};
+
+void login()
+{
+    int i=0;
+    system("clear");
+    while(i<3)
+    {
+        owner c1;
+        printf("Username:");
+        scanf("%s",c1.uname);
+        printf("Password:");
+        scanf("%s",c1.pword);
+        int k=0;
+        while(k<3)
+        {
+                 if((strcmp(c1.uname,name[k]))==0)
+                 {
+
+                            if(strcmp(c1.pword,pass[k])==0)
+                             {
+				             system("clear");
+                                printf("LOGIN SUCCESSFULL");
+                                int user_input(void);
+                                int port_input(void);
+                                user_input();
+                                port_input();
+                                return;
+                             }
+
+                 }
+
+                 k++;
+        }
+        i++;
+        system("clear");
+	printf("Invalid Username or Password. Try Again!!\n\n");
+    }
+    system("clear");
+    printf("LOGIN UNSUCCESSFULL AFTER THREE TRIES\n");
+    printf("\nRE-RUN YOUR PROGRAM AND TRY AGAIN\n\n");
+    exit(0);
 }

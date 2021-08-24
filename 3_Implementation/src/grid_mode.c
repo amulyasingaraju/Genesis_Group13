@@ -25,7 +25,7 @@ int grid_mode(int pv_power, int load_demand, int PROFITGRID)
    // As PV power < load demand
    pay_to_grid = (int)(load_demand * 0.001 * 3) - earning2 ; // EB Bill for power taking from grid - power given to grid
    printf("Net amount to pay to grid is Rs %d",pay_to_grid);
-   printf("\n");
+   printf("\n\n");
    printf("Today's total earning is Rs %d",PROFITGRID+pay_to_grid);
    printf("\n");
    return earning2;

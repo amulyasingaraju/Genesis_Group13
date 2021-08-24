@@ -2,7 +2,6 @@ PROJ_NAME = Sustainable_Hybrid_ChargingStation
 TEST_PROJ_NAME = Test_$(PROJ_NAME)
 
 SRC = src/grid_mode.c\
-src/init.c\
 src/islanded_mode.c\
 src/login.c\
 src/power_compare.c\
