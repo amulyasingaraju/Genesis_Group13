@@ -898,3 +898,287 @@ static int UnityFloatsWithin(UNITY_FLOAT delta, UNITY_FLOAT expected, UNITY_FLOA
     UNITY_FLOAT diff;
     UNITY_FLOAT_OR_DOUBLE_WITHIN(delta, expected, actual, diff);
 }
+/-----------------------------------------------/
+void UnityAssertEqualFloatArray(UNITY_PTR_ATTRIBUTE const UNITY_FLOAT* expected,
+                                UNITY_PTR_ATTRIBUTE const UNITY_FLOAT* actual,
+                                const UNITY_UINT32 num_elements,
+                                const char* msg,
+                                const UNITY_LINE_TYPE lineNumber,
+                                const UNITY_FLAGS_T flags)
+{
+    UNITY_UINT32 elements = num_elements;
+    UNITY_PTR_ATTRIBUTE const UNITY_FLOAT* ptr_expected = expected;
+    UNITY_PTR_ATTRIBUTE const UNITY_FLOAT* ptr_actual = actual;
+
+    RETURN_IF_FAIL_OR_IGNORE;
+
+    if (elements == 0)
+    {
+        UnityPrintPointlessAndBail();
+    }
+
+    if (expected == actual)
+    {
+        return; /* Both are NULL or same pointer */
+    }
+
+    if (UnityIsOneArrayNull((UNITY_INTERNAL_PTR)expected, (UNITY_INTERNAL_PTR)actual, lineNumber, msg))
+    {
+        UNITY_FAIL_AND_BAIL;
+    }
+
+    while (elements--)
+    {
+        if (!UnityFloatsWithin(*ptr_expected * UNITY_FLOAT_PRECISION, *ptr_expected, *ptr_actual))
+        {
+            UnityTestResultsFailBegin(lineNumber);
+            UnityPrint(UnityStrElement);
+            UnityPrintNumberUnsigned(num_elements - elements - 1);
+            UNITY_PRINT_EXPECTED_AND_ACTUAL_FLOAT((UNITY_DOUBLE)*ptr_expected, (UNITY_DOUBLE)*ptr_actual);
+            UnityAddMsgIfSpecified(msg);
+            UNITY_FAIL_AND_BAIL;
+        }
+        if (flags == UNITY_ARRAY_TO_ARRAY)
+        {
+            ptr_expected++;
+        }
+        ptr_actual++;
+    }
+}
+
+/-----------------------------------------------/
+void UnityAssertFloatsWithin(const UNITY_FLOAT delta,
+                             const UNITY_FLOAT expected,
+                             const UNITY_FLOAT actual,
+                             const char* msg,
+                             const UNITY_LINE_TYPE lineNumber)
+{
+    RETURN_IF_FAIL_OR_IGNORE;
+
+
+    if (!UnityFloatsWithin(delta, expected, actual))
+    {
+        UnityTestResultsFailBegin(lineNumber);
+        UNITY_PRINT_EXPECTED_AND_ACTUAL_FLOAT((UNITY_DOUBLE)expected, (UNITY_DOUBLE)actual);
+        UnityAddMsgIfSpecified(msg);
+        UNITY_FAIL_AND_BAIL;
+    }
+}
+
+/-----------------------------------------------/
+void UnityAssertFloatSpecial(const UNITY_FLOAT actual,
+                             const char* msg,
+                             const UNITY_LINE_TYPE lineNumber,
+                             const UNITY_FLOAT_TRAIT_T style)
+{
+    const char* trait_names[] = {UnityStrInf, UnityStrNegInf, UnityStrNaN, UnityStrDet};
+    UNITY_INT should_be_trait = ((UNITY_INT)style & 1);
+    UNITY_INT is_trait        = !should_be_trait;
+    UNITY_INT trait_index     = (UNITY_INT)(style >> 1);
+
+    RETURN_IF_FAIL_OR_IGNORE;
+
+    switch (style)
+    {
+        case UNITY_FLOAT_IS_INF:
+        case UNITY_FLOAT_IS_NOT_INF:
+            is_trait = isinf(actual) && (actual > 0);
+            break;
+        case UNITY_FLOAT_IS_NEG_INF:
+        case UNITY_FLOAT_IS_NOT_NEG_INF:
+            is_trait = isinf(actual) && (actual < 0);
+            break;
+
+        case UNITY_FLOAT_IS_NAN:
+        case UNITY_FLOAT_IS_NOT_NAN:
+            is_trait = isnan(actual) ? 1 : 0;
+            break;
+
+        case UNITY_FLOAT_IS_DET: /* A determinate number is non infinite and not NaN. */
+        case UNITY_FLOAT_IS_NOT_DET:
+            is_trait = !isinf(actual) && !isnan(actual);
+            break;
+
+        case UNITY_FLOAT_INVALID_TRAIT:
+        default:
+            trait_index = 0;
+            trait_names[0] = UnityStrInvalidFloatTrait;
+            break;
+    }
+
+    if (is_trait != should_be_trait)
+    {
+        UnityTestResultsFailBegin(lineNumber);
+        UnityPrint(UnityStrExpected);
+        if (!should_be_trait)
+        {
+            UnityPrint(UnityStrNot);
+        }
+        UnityPrint(trait_names[trait_index]);
+        UnityPrint(UnityStrWas);
+#ifndef UNITY_EXCLUDE_FLOAT_PRINT
+        UnityPrintFloat((UNITY_DOUBLE)actual);
+#else
+        if (should_be_trait)
+        {
+            UnityPrint(UnityStrNot);
+        }
+        UnityPrint(trait_names[trait_index]);
+#endif
+        UnityAddMsgIfSpecified(msg);
+        UNITY_FAIL_AND_BAIL;
+    }
+}
+
+#endif /* not UNITY_EXCLUDE_FLOAT */
+
+/-----------------------------------------------/
+#ifndef UNITY_EXCLUDE_DOUBLE
+static int UnityDoublesWithin(UNITY_DOUBLE delta, UNITY_DOUBLE expected, UNITY_DOUBLE actual)
+{
+    UNITY_DOUBLE diff;
+    UNITY_FLOAT_OR_DOUBLE_WITHIN(delta, expected, actual, diff);
+}
+
+/-----------------------------------------------/
+void UnityAssertEqualDoubleArray(UNITY_PTR_ATTRIBUTE const UNITY_DOUBLE* expected,
+                                 UNITY_PTR_ATTRIBUTE const UNITY_DOUBLE* actual,
+                                 const UNITY_UINT32 num_elements,
+                                 const char* msg,
+                                 const UNITY_LINE_TYPE lineNumber,
+                                 const UNITY_FLAGS_T flags)
+{
+    UNITY_UINT32 elements = num_elements;
+    UNITY_PTR_ATTRIBUTE const UNITY_DOUBLE* ptr_expected = expected;
+    UNITY_PTR_ATTRIBUTE const UNITY_DOUBLE* ptr_actual = actual;
+
+    RETURN_IF_FAIL_OR_IGNORE;
+
+    if (elements == 0)
+    {
+        UnityPrintPointlessAndBail();
+    }
+
+    if (expected == actual)
+    {
+        return; /* Both are NULL or same pointer */
+    }
+
+    if (UnityIsOneArrayNull((UNITY_INTERNAL_PTR)expected, (UNITY_INTERNAL_PTR)actual, lineNumber, msg))
+    {
+        UNITY_FAIL_AND_BAIL;
+    }
+
+    while (elements--)
+    {
+        if (!UnityDoublesWithin(*ptr_expected * UNITY_DOUBLE_PRECISION, *ptr_expected, *ptr_actual))
+        {
+            UnityTestResultsFailBegin(lineNumber);
+            UnityPrint(UnityStrElement);
+            UnityPrintNumberUnsigned(num_elements - elements - 1);
+            UNITY_PRINT_EXPECTED_AND_ACTUAL_FLOAT(*ptr_expected, *ptr_actual);
+            UnityAddMsgIfSpecified(msg);
+            UNITY_FAIL_AND_BAIL;
+        }
+        if (flags == UNITY_ARRAY_TO_ARRAY)
+        {
+            ptr_expected++;
+        }
+        ptr_actual++;
+    }
+}
+
+/-----------------------------------------------/
+void UnityAssertDoublesWithin(const UNITY_DOUBLE delta,
+                              const UNITY_DOUBLE expected,
+                              const UNITY_DOUBLE actual,
+                              const char* msg,
+                              const UNITY_LINE_TYPE lineNumber)
+{
+    RETURN_IF_FAIL_OR_IGNORE;
+
+    if (!UnityDoublesWithin(delta, expected, actual))
+    {
+        UnityTestResultsFailBegin(lineNumber);
+        UNITY_PRINT_EXPECTED_AND_ACTUAL_FLOAT(expected, actual);
+        UnityAddMsgIfSpecified(msg);
+        UNITY_FAIL_AND_BAIL;
+    }
+}
+
+/-----------------------------------------------/
+void UnityAssertDoubleSpecial(const UNITY_DOUBLE actual,
+                              const char* msg,
+                              const UNITY_LINE_TYPE lineNumber,
+                              const UNITY_FLOAT_TRAIT_T style)
+{
+    const char* trait_names[] = {UnityStrInf, UnityStrNegInf, UnityStrNaN, UnityStrDet};
+    UNITY_INT should_be_trait = ((UNITY_INT)style & 1);
+    UNITY_INT is_trait        = !should_be_trait;
+    UNITY_INT trait_index     = (UNITY_INT)(style >> 1);
+
+    RETURN_IF_FAIL_OR_IGNORE;
+
+    switch (style)
+    {
+        case UNITY_FLOAT_IS_INF:
+        case UNITY_FLOAT_IS_NOT_INF:
+            is_trait = isinf(actual) && (actual > 0);
+            break;
+        case UNITY_FLOAT_IS_NEG_INF:
+        case UNITY_FLOAT_IS_NOT_NEG_INF:
+            is_trait = isinf(actual) && (actual < 0);
+            break;
+
+        case UNITY_FLOAT_IS_NAN:
+        case UNITY_FLOAT_IS_NOT_NAN:
+            is_trait = isnan(actual) ? 1 : 0;
+            break;
+
+        case UNITY_FLOAT_IS_DET: /* A determinate number is non infinite and not NaN. */
+        case UNITY_FLOAT_IS_NOT_DET:
+            is_trait = !isinf(actual) && !isnan(actual);
+            break;
+
+        case UNITY_FLOAT_INVALID_TRAIT:
+        default:
+            trait_index = 0;
+            trait_names[0] = UnityStrInvalidFloatTrait;
+            break;
+    }
+
+    if (is_trait != should_be_trait)
+    {
+        UnityTestResultsFailBegin(lineNumber);
+        UnityPrint(UnityStrExpected);
+        if (!should_be_trait)
+        {
+            UnityPrint(UnityStrNot);
+        }
+        UnityPrint(trait_names[trait_index]);
+        UnityPrint(UnityStrWas);
+#ifndef UNITY_EXCLUDE_FLOAT_PRINT
+        UnityPrintFloat(actual);
+#else
+        if (should_be_trait)
+        {
+            UnityPrint(UnityStrNot);
+        }
+        UnityPrint(trait_names[trait_index]);
+#endif
+        UnityAddMsgIfSpecified(msg);
+        UNITY_FAIL_AND_BAIL;
+    }
+}
+
+#endif /* not UNITY_EXCLUDE_DOUBLE */
+
+/-----------------------------------------------/
+void UnityAssertNumbersWithin(const UNITY_UINT delta,
+                              const UNITY_INT expected,
+                              const UNITY_INT actual,
+                              const char* msg,
+                              const UNITY_LINE_TYPE lineNumber,
+                              const UNITY_DISPLAY_STYLE_T style)
+{
+    RETURN_IF_FAIL_OR_IGNORE;
