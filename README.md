@@ -25,16 +25,16 @@ Build | Code Quality | Unity | [Git Inspector] | Codacy | Code Inspector
 | 7_Meeting Details | Discussing about the project and contributing the work |
 
 ## Contribution List
-|  PS    | Name          |      Features                  | Issues Raised |  Issues Resolved| No of test cases  |
-|---     |---            |---                             |---------------|----------------|------------------- |
-| 99005853 | Potukuchi Nagalakshmi Kiranmayee | Makefile and Standup Meeting Details |               |                |                    |
-| 99005766 | Rohan Tehalyani | Total Earnings, Profit and Cost Function at each port |               |                |                    |
-| 99005830 | Battula Vineel | Power produced from PV and number of EVs charged |               |                |                    |
-| 99005835 | Alavelli IndraKumar | Amount of Power obtained from PV Grid and Total Price Calculation |               |                |                    |
-| 99005836 | Srinivasula Anirudh | Self-Checkout Application for User |               |                |                    |
-| 99005787 | Abhidha Rajesh Choudhari | User Input for PV Voltage, Current. Estimated waiting time and cost of each EV when Port is active |               |                | |
-| 99005799 | Potti Koteswararao | Power Calculation of PV. EV Charging Station Ports Status. Total time to charge when ports are active |                |                |    |
-| 99005798 | Singaraju Amulya | Welcome Message with User ID and Password to login to user (Owner) interface |               |                |                    |
-| 99005848 | Telagareddy Gangadhar | Calculation of surplus power and net-metering of solar power |               |                |                    |
-| 99005767 | Deepak Kumar Choudhary | Automatic Power Vending at Ports, Load Demand and its calculation, Power Comparision Function (Islanded Mode and Grid Mode) |  |  |  |
+|  PS    | Name          |      Features                  | 
+|---     |---            |---                             |
+| 99005853 | Potukuchi Nagalakshmi Kiranmayee | Makefile and Standup Meeting Details |
+| 99005766 | Rohan Tehalyani | Total Earnings, Profit and Cost Function at each port |
+| 99005830 | Battula Vineel | Power produced from PV and number of EVs charged |
+| 99005835 | Alavelli IndraKumar | Amount of Power obtained from PV Grid and Total Price Calculation | 
+| 99005836 | Srinivasula Anirudh | Self-Checkout Application for User | 
+| 99005787 | Abhidha Rajesh Choudhari | User Input for PV Voltage, Current. Estimated waiting time and cost of each EV when Port is active |
+| 99005799 | Potti Koteswararao | Power Calculation of PV. EV Charging Station Ports Status. Total time to charge when ports are active |
+| 99005798 | Singaraju Amulya | Welcome Message with User ID and Password to login to user (Owner) interface |
+| 99005848 | Telagareddy Gangadhar | Calculation of surplus power and net-metering of solar power | 
+| 99005767 | Deepak Kumar Choudhary | Automatic Power Vending at Ports, Load Demand and its calculation, Power Comparision Function (Islanded Mode and Grid Mode) |
 
